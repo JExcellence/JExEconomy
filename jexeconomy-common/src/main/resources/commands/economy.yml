@@ -1,0 +1,81 @@
+# JExCommand 2.0 tree - /economy (admin)
+# Console- and permission-gated operator tooling.
+
+name: economy
+description: "Administrative economy operations"
+aliases:
+  - eco
+  - econ
+permission: "jexeconomy.admin"
+senders: [console, player]
+
+subcommands:
+  - name: give
+    description: "Add currency to a player"
+    permission: "jexeconomy.admin.give"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Recipient player" }
+      - { name: amount,   type: positive_double,  required: true,  description: "Amount to give" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: take
+    description: "Remove currency from a player"
+    permission: "jexeconomy.admin.take"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: amount,   type: positive_double,  required: true,  description: "Amount to take" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: set
+    description: "Set a player's balance"
+    permission: "jexeconomy.admin.set"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: amount,   type: double,           required: true,  description: "New balance" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: reset
+    description: "Reset a player's balance to zero"
+    permission: "jexeconomy.admin.reset-player"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: giveall
+    description: "Give currency to every online player"
+    permission: "jexeconomy.admin.giveall"
+    senders: [console, player]
+    argumentSchema:
+      - { name: amount,   type: positive_double, required: true,  description: "Amount per online player" }
+      - { name: currency, type: currency,        required: false, description: "Currency id" }
+    subcommands:
+      - name: confirm
+        description: "Confirm and grant to every online player"
+        permission: "jexeconomy.admin.giveall"
+        senders: [console, player]
+        argumentSchema:
+          - { name: amount,   type: positive_double, required: true,  description: "Amount per online player" }
+          - { name: currency, type: currency,        required: false, description: "Currency id" }
+
+  - name: migrate
+    description: "Import balances from another economy"
+    permission: "jexeconomy.admin.migrate"
+    senders: [console, player]
+    argumentSchema:
+      - { name: action, type: migrate_action, required: true, description: "sources, plan, start, pause, resume, status or rollback" }
+      - { name: target, type: string, required: false, description: "Source, plan id or run id" }
+      - { name: currency, type: currency, required: false, description: "Target currency, default is the Vault currency" }
+      - { name: mode, type: migration_mode, required: false, description: "skip-existing, overwrite or add" }
+
+  - name: reload
+    description: "Reload currency cache and translations"
+    permission: "jexeconomy.admin.reload"
+    senders: [console, player]
+
+  - name: help
+    description: "Show /economy usage"
+    senders: [console, player]

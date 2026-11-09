@@ -1,0 +1,43 @@
+# Coupon templates: physical, right-click-to-redeem reward items.
+#
+# Admin-minted: /coupon give <player> <template> [amount]. Each minted item carries
+# a unique UUID and the first redeem wins (duplicate-protected in the database).
+# Payouts and commands are read fresh at redeem time, so editing this file changes
+# every coupon that is already out there.
+#
+# Fields (all optional except name and icon):
+#   name     - MiniMessage display name on the item
+#   lore     - MiniMessage lore lines (the currency payout block is appended)
+#   icon     - Material name
+#   glint    - true shows an enchantment glint
+#   payouts  - currency id and amount, deposited on redeem; ids come from currencies.yml
+#   commands - console commands run on redeem, in order, {player} is the redeemer's
+#              name. Describe them in lore, they are not shown automatically.
+coupons:
+
+  starter_pack:
+    name: "<gradient:#fde047:#f59e0b>Starter Pack</gradient>"
+    lore:
+      - "<gray>A welcome gift for new arrivals."
+    icon: PAPER
+    glint: true
+    payouts:
+      coins: 750
+
+  weekly_bonus:
+    name: "<gradient:#86efac:#0891b2>Weekly Bonus</gradient>"
+    lore:
+      - "<gray>A top-up for loyal players."
+    icon: SUNFLOWER
+    glint: true
+    payouts:
+      coins: 5000
+
+  coin_jackpot:
+    name: "<gradient:#fde047:#dc2626>Coin Jackpot</gradient>"
+    lore:
+      - "<gray>A big coin prize."
+    icon: GOLD_BLOCK
+    glint: true
+    payouts:
+      coins: 50000

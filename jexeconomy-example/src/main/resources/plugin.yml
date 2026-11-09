@@ -1,0 +1,8 @@
+name: JExEconomyExample
+version: '1.0.0'
+main: de.jexcellence.economy.example.TradeBanExample
+description: A small example of the JExEconomy extension interface
+api-version: '1.21'
+folia-supported: true
+depend:
+  - JExEconomy

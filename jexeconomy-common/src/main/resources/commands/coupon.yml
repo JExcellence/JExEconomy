@@ -1,0 +1,31 @@
+# JExCommand 2.0 tree - /coupon
+# Admin tooling for minting + giving coupon items.
+name: coupon
+description: "Mint and give coupon items"
+aliases:
+  - coupons
+permission: "jexeconomy.coupon"
+senders: [player, console]
+
+subcommands:
+  - name: give
+    description: "Mint a coupon from a template and give it to a player"
+    permission: "jexeconomy.coupon.give"
+    argumentSchema:
+      - { name: player,   type: offline_player,  required: true,  description: "Recipient" }
+      - { name: template, type: coupon_template, required: true,  description: "Template identifier from coupons.yml" }
+      - { name: amount,   type: positive_long,   required: false, description: "How many copies to mint (default 1)" }
+
+  - name: list
+    description: "List all available coupon templates"
+    permission: "jexeconomy.coupon.list"
+
+  - name: reload
+    description: "Reload coupons.yml without a restart"
+    permission: "jexeconomy.coupon.reload"
+
+  - name: history
+    description: "Show recent redemptions by a player"
+    permission: "jexeconomy.coupon.history"
+    argumentSchema:
+      - { name: player, type: offline_player, required: true, description: "Player to look up" }

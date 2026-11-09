@@ -1,0 +1,50 @@
+# ───────────────────────────────────────────────────────────────────────────
+# Currency seed definitions - read on plugin enable.
+#
+# Each top-level key under `currencies:` is a currency identifier used in
+# code (e.g. `JExEconomyAPI.get().deposit(player, "coins", 5, ...)`).
+# Missing currencies are CREATED on startup; existing ones are LEFT ALONE
+# (operator edits via /currencies survive restarts).
+#
+# Fields per currency:
+#   symbol  - short symbol shown in totals (e.g. "$")
+#   prefix  - text shown before the amount (optional)
+#   suffix  - text shown after the amount (optional)
+#   icon    - Material name used as the GUI icon
+#
+currencies:
+
+  # The default currency. Add more entries for further currencies.
+  coins:
+    symbol: "$"
+    icon: GOLD_INGOT
+
+# ── Non-payable currencies ───────────────────────────────────────────────────
+# Currency identifiers that players may NOT transfer with /pay, for example a
+# currency sold for real money. Without this key every currency can be paid.
+# non-payable:
+#   - gems
+
+# ── /pay confirmation ────────────────────────────────────────────────────────
+# Payments of at least this many units (coins as players see them) ask for a
+# confirmation: a chat line with Confirm and Cancel buttons (a form on Bedrock)
+# that expires after 30 seconds. 0 turns the confirmation off.
+pay-confirm-threshold: 100000
+
+# The one currency that plugins using Vault (shops, jobs and similar) can see.
+# It must exist; Vault plugins see no economy otherwise.
+vault:
+  currency: coins
+
+# ── Resettable currencies ────────────────────────────────────────────────────
+# Currency identifiers that may be wiped for every player at once through
+# EconomyProvider#resetCurrency (for example a seasonal currency). Plugins can
+# also flag their own currencies at runtime when they register them. Leave the
+# key out when no currency is resettable.
+# resettable:
+#   - season_points
+
+# ── Whole-number currencies ──────────────────────────────────────────────────
+# Currency identifiers whose balances are shown without decimals.
+# whole-numbers:
+#   - season_points

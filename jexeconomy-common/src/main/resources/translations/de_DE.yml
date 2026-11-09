@@ -1,0 +1,623 @@
+# ─── JExEconomy ─ Deutsch (DE) ───────────────────────────────────────────────
+# MiniMessage-Format | {placeholder}-Syntax. Live-Dateien werden nie neu erzeugt: geänderte Texte bekommen
+# neue versionierte Schlüssel (economy-v2.*), die beim Merge in bestehende Dateien kommen.
+
+prefix: "<gradient:#FBBF24:#F59E0B>Schatzkammer</gradient> <dark_gray>»</dark_gray> "
+
+# ── JExCommand framework and argument-type keys (fixed names) ─────────────────
+
+jexcommand:
+  usage: "<gray>Benutzung: <white>{usage}</white>"
+  error:
+    missing-argument: "<red>Fehlendes Argument <gold>{name}</gold> <dark_gray>(<gray>{type}</gray>)</dark_gray>."
+    too-many-arguments: "<red>Zu viele Argumente."
+    unknown-subcommand: "<red>Unbekannter Unterbefehl <gold>{name}</gold>."
+    ambiguous-subcommand: "<red><gold>{name}</gold> passt zu mehreren Unterbefehlen: <gold>{choices}</gold>. Klicke einen an oder tippe weiter.</red>"
+    no-permission: "<red>Keine Berechtigung. <dark_gray>(<gray>{permission}</gray>)</dark_gray>"
+    not-a-player: "<red>Dieser Befehl kann nur von einem Spieler ausgeführt werden."
+    not-a-console: "<red>Dieser Befehl kann nur von der Konsole ausgeführt werden."
+    player-only: "<red>Dieser Befehl kann nur von einem Spieler ausgeführt werden."
+    console-only: "<red>Dieser Befehl kann nur von der Konsole ausgeführt werden."
+    unknown-type: "<red>Unbekannter Argumenttyp <gold>{type}</gold>."
+    internal: "<red>Interner Fehler: <white>{message}</white>"
+    invalid-long: "<red><white>{value}</white> ist keine gültige Ganzzahl."
+    invalid-double: "<red><white>{value}</white> ist keine gültige Zahl."
+    not-positive-long: "<red><white>{value}</white> muss eine positive Ganzzahl sein."
+    not-positive-double: "<red><white>{value}</white> muss eine positive Zahl sein."
+    player-not-online: "<red>Spieler <white>{value}</white> ist nicht online."
+    player-unknown: "<red>Spieler <white>{value}</white> war noch nie auf diesem Server."
+    invalid-enum: "<red><white>{value}</white> ist nicht gültig: <gray>{options}</gray>."
+    invalid-uuid: "<red><white>{value}</white> ist keine gültige UUID."
+    expected-single-word: "<red>Erwarte ein einzelnes Wort ohne Leerzeichen."
+
+# ── /economy Admin-Befehl ────────────────────────────────────────────────────
+
+economy:
+  error:
+    currency-not-found: "<red>Währung <gold>{currency}</gold> nicht gefunden."
+
+coupon:
+  error:
+    template-not-found: "<red>Keine Coupon-Vorlage namens <white>{template}</white>."
+
+# ── Zweite Generation (Menüs, Panels, Chatzeilen) ────────────────────────────
+# Chat-Panels setzt der gemeinsame ChatPanel-Renderer; die Zeilen hier liefern nur Text und Farbe.
+
+economy-v2:
+  prefix: "<gradient:#FBBF24:#F59E0B>Schatzkammer</gradient> <dark_gray>»</dark_gray> "
+  common:
+    unknown-player: "Unbekannter Spieler"
+    none: "-"
+  currency-name:
+    coins: "Coins"
+    crystals: "Kristalle"
+  panel:
+    label: "<#94A3B8>{label}</#94A3B8>"
+    separator: " <dark_gray>|</dark_gray> "
+    section: "<#C4B5FD>{name}</#C4B5FD>"
+    value: "<#F1F5F9>{value}</#F1F5F9>"
+    raw: "{value}"
+  card:
+    row: "<#94A3B8>{label}</#94A3B8> <dark_gray>|</dark_gray> {value}"
+    line: "<#CBD5E1>{text}</#CBD5E1>"
+    value: "<#F1F5F9>{value}</#F1F5F9>"
+    none: "<#64748B>-</#64748B>"
+    section-title: "<#C4B5FD>{name}</#C4B5FD>"
+    section:
+      show: "<#C4B5FD>Anzeigen</#C4B5FD>"
+      now: "<#C4B5FD>Aktuell</#C4B5FD>"
+      format: "<#C4B5FD>Format</#C4B5FD>"
+      preview: "<#C4B5FD>Vorschau</#C4B5FD>"
+      balance: "<#C4B5FD>Guthaben</#C4B5FD>"
+
+  error:
+    no-permission: "<#F87171>[X]</#F87171> <#94A3B8>Dafür fehlt dir die Berechtigung.</#94A3B8>"
+    player-not-found: "<#F87171>[X]</#F87171> <#94A3B8>Kein Spieler namens</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>war hier schon online.</#94A3B8>"
+    no-currencies: "<#F87171>[X]</#F87171> <#94A3B8>Es sind noch keine Währungen eingerichtet.</#94A3B8>"
+    invalid-amount: "<#F87171>[X]</#F87171> <#94A3B8>Der Betrag muss eine positive Zahl sein.</#94A3B8>"
+    self-payment: "<#F87171>[X]</#F87171> <#94A3B8>Du kannst dich nicht selbst bezahlen.</#94A3B8>"
+    reserved-currency-name: "<#F87171>[X]</#F87171> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>ist als Währungsname reserviert, weil</#94A3B8> <#F1F5F9>/balance {currency}</#F1F5F9> <#94A3B8>einen Unterbefehl öffnet. Reservierte Namen:</#94A3B8> <#F1F5F9>{names}</#F1F5F9>"
+    insufficient-funds: "<#F87171>[X]</#F87171> <#94A3B8>Nicht genug Geld. Du brauchst</#94A3B8> {value} <#94A3B8>und hast</#94A3B8> {balance}<#94A3B8>.</#94A3B8>"
+    unknown: "unbekannter Fehler"
+
+  failure:
+    currency-not-found: "diese Währung gibt es nicht"
+    amount-not-positive: "der Betrag muss positiv sein"
+    balance-negative: "ein Guthaben kann nicht negativ sein"
+    insufficient-funds: "nicht genug Geld"
+    balance-changed: "das Guthaben hat sich geändert"
+    cancelled: "ein anderes Plugin hat diese Änderung blockiert"
+    not-payable: "diese Währung kann nicht an andere Spieler gesendet werden"
+    trade-blocked: "dieser Spieler kann nicht handeln"
+    transfer-in-flight: "die letzte Zahlung wird noch gebucht"
+    bank-denied: "kein Recht, Geld von diesem Guthaben zu nehmen"
+    recipient-bank-full: "das Guthaben des Empfängers ist voll"
+    whole-coins: "nur ganze Coins können gezahlt werden"
+    transfer-failed: "die Überweisung konnte nicht gebucht werden"
+    reset-failed: "das Guthaben konnte nicht zurückgesetzt werden"
+    partial-deposit: "nur ein Teil des Betrags wurde gebucht, prüf das Transaktionslog"
+    storage-failed: "die Datenbank hat nicht geantwortet, versuch es gleich noch einmal"
+
+  balance:
+    single-self: "<#94A3B8>{currency}</#94A3B8> <dark_gray>|</dark_gray> {value}"
+    single-self-bank: "<#94A3B8>{currency}</#94A3B8> <dark_gray>|</dark_gray> {value} <#64748B>(nicht in deiner Geldbörse)</#64748B>"
+    single-other: "<#F1F5F9>{player}</#F1F5F9> <dark_gray>|</dark_gray> <#94A3B8>{currency}</#94A3B8> <dark_gray>|</dark_gray> {value}"
+    single-other-bank: "<#F1F5F9>{player}</#F1F5F9> <dark_gray>|</dark_gray> <#94A3B8>{currency}</#94A3B8> <dark_gray>|</dark_gray> {value} <#64748B>(nicht in der Geldbörse)</#64748B>"
+    empty-self: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Du hast noch keine Konten.</#94A3B8>"
+    empty-other: "<#FBBF24>[!]</#FBBF24> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat noch keine Konten.</#94A3B8>"
+    header-self: "<gradient:#FBBF24:#F59E0B>Deine Schatzkammer</gradient>"
+    header-other: "<gradient:#FBBF24:#F59E0B>Schatzkammer</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{player}</#F1F5F9>"
+    bank-label: "{currency} (extern)"
+    footer: "<click:run_command:'/balance top'><hover:show_text:'<#94A3B8>Klicken öffnet die Rangliste</#94A3B8>'><#A78BFA>></#A78BFA> <#94A3B8>/balance top zeigt die reichsten Spieler</#94A3B8></hover></click>"
+    top:
+      empty: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Noch niemand besitzt</#94A3B8> <#F1F5F9>{currency}</#F1F5F9><#94A3B8>.</#94A3B8>"
+      header: "<gradient:#FBBF24:#F59E0B>Reichste Spieler</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{currency}</#F1F5F9>"
+      context: "<#94A3B8>Top {limit}</#94A3B8>"
+      rank: "#{rank} {player}"
+
+  pay:
+    no-default-currency: "<#F87171>[X]</#F87171> <#94A3B8>Gerade kann keine Währung überwiesen werden. Frag das Team.</#94A3B8>"
+    currency-not-allowed: "<#F87171>[X]</#F87171> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>kann nicht an andere Spieler gesendet werden.</#94A3B8>"
+    isolated-blocked: "<#F87171>[X]</#F87171> <#94A3B8>Du oder dieser Spieler kann keine Zahlungen senden oder empfangen.</#94A3B8>"
+    confirm-panel: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Du zahlst</#94A3B8> {value} <#94A3B8>an</#94A3B8> <#F1F5F9>{target}</#F1F5F9> <dark_gray>|</dark_gray>"
+    confirm-button: "<hover:show_text:'<#94A3B8>Zahlung jetzt senden</#94A3B8>'><#4ADE80>[Bestätigen]</#4ADE80></hover>"
+    cancel-button: "<hover:show_text:'<#94A3B8>Nicht senden</#94A3B8>'><#F87171>[Abbrechen]</#F87171></hover>"
+    confirm-expired: "<#F87171>[X]</#F87171> <#94A3B8>Diese Zahlung wartet nicht mehr auf eine Bestätigung. Nutze /pay erneut.</#94A3B8>"
+    cancelled: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Zahlung abgebrochen. Es wurde nichts gesendet.</#94A3B8>"
+    in-progress: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Deine letzte Zahlung wird noch gebucht. Versuch es gleich noch einmal.</#94A3B8>"
+    bank-denied: "<#F87171>[X]</#F87171> <#94A3B8>Du darfst kein Geld von diesem Guthaben nehmen.</#94A3B8>"
+    recipient-bank-full: "<#F87171>[X]</#F87171> <#94A3B8>Das Guthaben von</#94A3B8> <#F1F5F9>{target}</#F1F5F9> <#94A3B8>hat keinen Platz für diese Zahlung. Es wurde nichts gesendet.</#94A3B8>"
+    whole-coins: "<#F87171>[X]</#F87171> <#94A3B8>Coins können nur in ganzen Beträgen gezahlt werden.</#94A3B8>"
+    failed: "<#F87171>[X]</#F87171> <#94A3B8>Die Zahlung ist fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    sent: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Du hast</#94A3B8> {value} <#94A3B8>an</#94A3B8> <#F1F5F9>{target}</#F1F5F9> <#94A3B8>gesendet. Guthaben jetzt</#94A3B8> {balance}<#94A3B8>.</#94A3B8>"
+    received: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{sender}</#F1F5F9> <#94A3B8>hat dir</#94A3B8> {value} <#94A3B8>gesendet.</#94A3B8>"
+
+  log:
+    date-pattern: "dd.MM.yy HH:mm"
+    not-found: "<#F87171>[X]</#F87171> <#94A3B8>Es gibt keinen Logeintrag</#94A3B8> <#F1F5F9>#{id}</#F1F5F9><#94A3B8>.</#94A3B8>"
+    error: "<#F87171>[X]</#F87171> <#94A3B8>Das Transaktionslog konnte nicht geladen werden. Versuch es gleich noch einmal.</#94A3B8>"
+    empty: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Du hast noch keine Transaktionen.</#94A3B8>"
+    empty-other: "<#FBBF24>[!]</#FBBF24> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat noch keine Transaktionen.</#94A3B8>"
+    page-not-found: "<#F87171>[X]</#F87171> <#94A3B8>Seite</#94A3B8> <#F1F5F9>{page}</#F1F5F9> <#94A3B8>gibt es nicht, das Log hat</#94A3B8> <#F1F5F9>{total}</#F1F5F9> <#94A3B8>Seiten.</#94A3B8>"
+    clear-too-small: "<#F87171>[X]</#F87171> <#94A3B8>Nimm mindestens</#94A3B8> <#F1F5F9>{min}</#F1F5F9> <#94A3B8>Tage, nicht</#94A3B8> <#F1F5F9>{given}</#F1F5F9><#94A3B8>.</#94A3B8>"
+    clear-start: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Lösche Logeinträge, die älter als</#94A3B8> <#F1F5F9>{days}</#F1F5F9> <#94A3B8>Tage sind...</#94A3B8>"
+    clear-done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Logeinträge gelöscht, die älter als</#94A3B8> <#F1F5F9>{days}</#F1F5F9> <#94A3B8>Tage waren.</#94A3B8>"
+    clear-failed: "<#F87171>[X]</#F87171> <#94A3B8>Die alten Logeinträge konnten nicht gelöscht werden. Sieh in die Konsole.</#94A3B8>"
+    header: "<gradient:#FBBF24:#F59E0B>Deine Transaktionen</gradient>"
+    header-other: "<gradient:#FBBF24:#F59E0B>Transaktionen</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{player}</#F1F5F9>"
+    context: "<#94A3B8>Seite {page}/{pages} | {total} Einträge</#94A3B8>"
+    entry: "<click:run_command:'/currencylog details {id}'><hover:show_text:'<#94A3B8>Klicken für alle Details zu #{id}</#94A3B8>'><#64748B>{time}</#64748B> <#F1F5F9>{type}</#F1F5F9></hover></click>"
+    entry-failed: "<click:run_command:'/currencylog details {id}'><hover:show_text:'<#94A3B8>Klicken für alle Details zu #{id}</#94A3B8>'><#F87171>[X]</#F87171> <#64748B>{time}</#64748B> <#F1F5F9>{type}</#F1F5F9></hover></click>"
+    change-plus: "<#4ADE80>+</#4ADE80>{value}"
+    change-minus: "<#F87171>-</#F87171>{value}"
+    balance-change: "{old} <#64748B>></#64748B> {new}"
+    nav:
+      previous: "<click:run_command:'/currencylog view {page}'><hover:show_text:'<#94A3B8>Seite {page}</#94A3B8>'><#A78BFA>← Zurück</#A78BFA></hover></click>"
+      previous-off: "<#475569>← Zurück</#475569>"
+      next: "<click:run_command:'/currencylog view {page}'><hover:show_text:'<#94A3B8>Seite {page}</#94A3B8>'><#A78BFA>Weiter »</#A78BFA></hover></click>"
+      next-off: "<#475569>Weiter »</#475569>"
+      separator: " <dark_gray>|</dark_gray> "
+      info: "<#94A3B8>Seite {page}/{pages}</#94A3B8>"
+    details:
+      header: "<gradient:#FBBF24:#F59E0B>Transaktion</gradient> <dark_gray>|</dark_gray> <#F1F5F9>#{id}</#F1F5F9>"
+      back: "<click:run_command:'/currencylog view'><#A78BFA>←</#A78BFA> <#94A3B8>Zurück zum Log</#94A3B8></click>"
+    state:
+      ok: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Abgeschlossen</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#94A3B8>Fehlgeschlagen</#94A3B8>"
+    label:
+      time: "Zeit"
+      type: "Art"
+      currency: "Währung"
+      amount: "Betrag"
+      balance: "Guthaben"
+      change: "Änderung"
+      player: "Spieler"
+      initiator: "Ausgelöst von"
+      reason: "Grund"
+      error: "Fehler"
+    type:
+      deposit: "Einzahlung"
+      withdraw: "Abbuchung"
+      set: "Vom Team gesetzt"
+      transfer-out: "Zahlung gesendet"
+      transfer-in: "Zahlung erhalten"
+      shop-sell: "Shop-Verkauf"
+
+  help:
+    balance:
+      header: "<gradient:#FBBF24:#F59E0B>Befehle der Schatzkammer</gradient>"
+      context: "<#94A3B8>Klick auf einen Befehl, um ihn zu nutzen</#94A3B8>"
+      self:
+        command: "<click:run_command:'/{alias}'><#A78BFA>/{alias}</#A78BFA></click>"
+        text: "<#94A3B8>Alle deine Guthaben</#94A3B8>"
+      single:
+        command: "<click:suggest_command:'/{alias} '><#A78BFA>/{alias}</#A78BFA> <#64748B>[Währung]</#64748B></click>"
+        text: "<#94A3B8>Eine Währung</#94A3B8>"
+      all:
+        command: "<click:run_command:'/{alias} all'><#A78BFA>/{alias} all</#A78BFA></click>"
+        text: "<#94A3B8>Alle Währungen</#94A3B8>"
+      other:
+        command: "<click:suggest_command:'/{alias} all '><#A78BFA>/{alias} all</#A78BFA> <#64748B>[Spieler]</#64748B></click>"
+        text: "<#94A3B8>Guthaben eines anderen Spielers</#94A3B8>"
+      top:
+        command: "<click:run_command:'/{alias} top'><#A78BFA>/{alias} top</#A78BFA> <#64748B>[Währung]</#64748B></click>"
+        text: "<#94A3B8>Reichste Spieler</#94A3B8>"
+    log:
+      header: "<gradient:#FBBF24:#F59E0B>Befehle des Transaktionslogs</gradient>"
+      context: "<#94A3B8>Klick auf einen Befehl, um ihn zu nutzen</#94A3B8>"
+      view:
+        command: "<click:run_command:'/{alias} view'><#A78BFA>/{alias} view</#A78BFA> <#64748B>[Seite]</#64748B></click>"
+        text: "<#94A3B8>Deine Transaktionen</#94A3B8>"
+      details:
+        command: "<click:suggest_command:'/{alias} details '><#A78BFA>/{alias} details</#A78BFA> <#64748B><id></#64748B></click>"
+        text: "<#94A3B8>Ein Eintrag mit allen Details</#94A3B8>"
+      player:
+        command: "<click:suggest_command:'/{alias} player '><#A78BFA>/{alias} player</#A78BFA> <#64748B><Spieler> [Seite]</#64748B></click>"
+        text: "<#94A3B8>Transaktionen eines anderen Spielers</#94A3B8>"
+      clear:
+        command: "<click:suggest_command:'/{alias} clear '><#A78BFA>/{alias} clear</#A78BFA> <#64748B>[Tage]</#64748B></click>"
+        text: "<#94A3B8>Alte Einträge löschen</#94A3B8>"
+    currencies:
+      header: "<gradient:#FBBF24:#F59E0B>Befehle für Währungen</gradient>"
+      context: "<#94A3B8>Klick auf einen Befehl, um ihn zu nutzen</#94A3B8>"
+      overview:
+        command: "<click:run_command:'/{alias} overview'><#A78BFA>/{alias} overview</#A78BFA></click>"
+        text: "<#94A3B8>Währungsverwaltung</#94A3B8>"
+      list:
+        command: "<click:run_command:'/{alias} list'><#A78BFA>/{alias} list</#A78BFA></click>"
+        text: "<#94A3B8>Alle Währungen im Chat</#94A3B8>"
+      info:
+        command: "<click:suggest_command:'/{alias} info '><#A78BFA>/{alias} info</#A78BFA> <#64748B><Währung></#64748B></click>"
+        text: "<#94A3B8>Format einer Währung</#94A3B8>"
+      create:
+        command: "<click:suggest_command:'/{alias} create '><#A78BFA>/{alias} create</#A78BFA> <#64748B><id> <Symbol> [Präfix] [Suffix]</#64748B></click>"
+        text: "<#94A3B8>Neue Währung</#94A3B8>"
+      update:
+        command: "<click:suggest_command:'/{alias} edit '><#A78BFA>/{alias} edit</#A78BFA> <#64748B><Währung> <Feld> <Wert></#64748B></click>"
+        text: "<#94A3B8>Ein Feld ändern</#94A3B8>"
+      delete:
+        command: "<click:suggest_command:'/{alias} delete '><#A78BFA>/{alias} delete</#A78BFA> <#64748B><Währung></#64748B></click>"
+        text: "<#94A3B8>Eine Währung löschen</#94A3B8>"
+    economy:
+      header: "<gradient:#FBBF24:#F59E0B>Economy-Verwaltung</gradient>"
+      context: "<#94A3B8>Klick auf einen Befehl, um ihn zu nutzen</#94A3B8>"
+      give:
+        command: "<click:suggest_command:'/{alias} give '><#A78BFA>/{alias} give</#A78BFA> <#64748B><Spieler> <Betrag> [Währung]</#64748B></click>"
+        text: "<#94A3B8>Guthaben erhöhen</#94A3B8>"
+      take:
+        command: "<click:suggest_command:'/{alias} take '><#A78BFA>/{alias} take</#A78BFA> <#64748B><Spieler> <Betrag> [Währung]</#64748B></click>"
+        text: "<#94A3B8>Guthaben abziehen</#94A3B8>"
+      set:
+        command: "<click:suggest_command:'/{alias} set '><#A78BFA>/{alias} set</#A78BFA> <#64748B><Spieler> <Betrag> [Währung]</#64748B></click>"
+        text: "<#94A3B8>Genaues Guthaben setzen</#94A3B8>"
+      reset:
+        command: "<click:suggest_command:'/{alias} reset '><#A78BFA>/{alias} reset</#A78BFA> <#64748B><Spieler> [Währung]</#64748B></click>"
+        text: "<#94A3B8>Guthaben auf null setzen</#94A3B8>"
+      giveall:
+        command: "<click:suggest_command:'/{alias} giveall '><#A78BFA>/{alias} giveall</#A78BFA> <#64748B><Betrag> [Währung]</#64748B></click>"
+        text: "<#94A3B8>Allen Online-Spielern schenken</#94A3B8>"
+      migrate-steps:
+        command: "<click:suggest_command:'/{alias} migrate '><#A78BFA>/{alias} migrate</#A78BFA> <#64748B><step></#64748B></click>"
+        text: "<#94A3B8>Guthaben importieren</#94A3B8>"
+      reload:
+        command: "<click:run_command:'/{alias} reload'><#A78BFA>/{alias} reload</#A78BFA></click>"
+        text: "<#94A3B8>Währungen und Texte neu laden</#94A3B8>"
+
+  admin:
+    give-done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat</#94A3B8> {value} <#94A3B8>erhalten. Guthaben jetzt</#94A3B8> {balance}<#94A3B8>.</#94A3B8>"
+    give-failed: "<#F87171>[X]</#F87171> <#94A3B8>Gutschrift an</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    take-done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Von</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>abgezogen:</#94A3B8> {value}<#94A3B8>. Guthaben jetzt</#94A3B8> {balance}<#94A3B8>.</#94A3B8>"
+    take-failed: "<#F87171>[X]</#F87171> <#94A3B8>Abzug bei</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    set-done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat jetzt</#94A3B8> {balance}<#94A3B8>.</#94A3B8>"
+    set-failed: "<#F87171>[X]</#F87171> <#94A3B8>Guthaben von</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>konnte nicht gesetzt werden:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    reset-done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>von</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>auf null gesetzt.</#94A3B8>"
+    reset-failed: "<#F87171>[X]</#F87171> <#94A3B8>Zurücksetzen von</#94A3B8> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    giveall-none: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Niemand ist online, der ein Geschenk bekommen könnte.</#94A3B8>"
+    giveall-confirm: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Allen</#94A3B8> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Online-Spielern</#94A3B8> {value} <#94A3B8>geben?</#94A3B8> <click:run_command:'/economy giveall confirm {amount} {currency}'><hover:show_text:'<#94A3B8>Klicken zum Bestätigen</#94A3B8>'><#4ADE80>[Bestätigen]</#4ADE80></hover></click>"
+    giveall-broadcast: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Ein Geschenk vom Team:</#94A3B8> {value} <#94A3B8>für alle, die online sind.</#94A3B8>"
+    giveall-done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Online-Spieler haben</#94A3B8> {value} <#94A3B8>erhalten.</#94A3B8>"
+    giveall-partial: "<#FBBF24>[!]</#FBBF24> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Spieler haben</#94A3B8> {value} <#94A3B8>erhalten,</#94A3B8> <#F87171>{failed}</#F87171> <#94A3B8>nicht:</#94A3B8> <#F1F5F9>{players}</#F1F5F9><#94A3B8>. Wiederhole den Befehl nicht, zahle diesen Spielern einzeln aus.</#94A3B8>"
+    giveall-failed: "<#F87171>[X]</#F87171> <#94A3B8>Das Geschenk ist fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    reload-start: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Lade Währungen und Texte neu...</#94A3B8>"
+    reload-done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Neu geladen,</#94A3B8> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Währungen aktiv.</#94A3B8>"
+    reload-failed: "<#F87171>[X]</#F87171> <#94A3B8>Neuladen fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+    no-currency: "<#F87171>[X]</#F87171> <#94A3B8>Es gibt noch keine Währung. Lege eine mit</#94A3B8> <#F1F5F9>/currencies create</#F1F5F9> <#94A3B8>an.</#94A3B8>"
+    currency-required: "<#F87171>[X]</#F87171> <#94A3B8>Gib eine Währung an, es gibt mehrere:</#94A3B8> <#F1F5F9>{available}</#F1F5F9>"
+
+  migration:
+    usage:
+      header: "<gradient:#FBBF24:#F59E0B>Migrationsbefehle</gradient>"
+      sources:
+        command: "<click:suggest_command:'/{alias} migrate sources'><#A78BFA>/{alias} migrate sources</#A78BFA></click>"
+        text: "<#94A3B8>Zeigt, was importiert werden kann</#94A3B8>"
+      plan:
+        command: "<click:suggest_command:'/{alias} migrate plan '><#A78BFA>/{alias} migrate plan</#A78BFA> <#64748B><quelle> [währung] [modus]</#64748B></click>"
+        text: "<#94A3B8>Probelauf, ändert nichts</#94A3B8>"
+      start:
+        command: "<click:suggest_command:'/{alias} migrate start '><#A78BFA>/{alias} migrate start</#A78BFA> <#64748B><plan-id></#64748B></click>"
+        text: "<#94A3B8>Führt einen Plan aus (nur Konsole)</#94A3B8>"
+      pause:
+        command: "<click:suggest_command:'/{alias} migrate pause'><#A78BFA>/{alias} migrate pause</#A78BFA></click>"
+        text: "<#94A3B8>Stoppt nach dem aktuellen Block</#94A3B8>"
+      resume:
+        command: "<click:suggest_command:'/{alias} migrate resume'><#A78BFA>/{alias} migrate resume</#A78BFA></click>"
+        text: "<#94A3B8>Setzt einen pausierten Lauf fort (nur Konsole)</#94A3B8>"
+      status:
+        command: "<click:suggest_command:'/{alias} migrate status'><#A78BFA>/{alias} migrate status</#A78BFA></click>"
+        text: "<#94A3B8>Zeigt den neuesten Lauf</#94A3B8>"
+      rollback:
+        command: "<click:suggest_command:'/{alias} migrate rollback '><#A78BFA>/{alias} migrate rollback</#A78BFA> <#64748B><lauf-id></#64748B></click>"
+        text: "<#94A3B8>Stellt alte Guthaben wieder her (nur Konsole)</#94A3B8>"
+    sources:
+      header: "<gradient:#FBBF24:#F59E0B>Importquellen</gradient>"
+      entry: "<#A78BFA>-</#A78BFA> <#F1F5F9>{id}</#F1F5F9>"
+      none: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Keine Quelle gefunden. Installiere das alte Economy-Plugin oder lege eine CSV-Datei in plugins/JExEconomy/migrations/import ab.</#94A3B8>"
+    plan:
+      running: "<#94A3B8>Die Quelle wird gelesen, das kann einen Moment dauern.</#94A3B8>"
+      header: "<gradient:#FBBF24:#F59E0B>Migrationsplan</gradient>"
+      players: "Spieler"
+      source-total: "Summe der Quelle"
+      import-total: "Würde importiert"
+      rounding: "Durch Rundung verloren"
+      invalid: "Ungültig"
+      unreadable: "Nicht lesbar"
+      empty: "Leer"
+      existing: "Haben schon Guthaben"
+      already: "Früher importiert"
+      next: "<#A78BFA>></#A78BFA> <#94A3B8>/economy migrate start {id} in der Konsole. Sichere vorher die Datenbank.</#94A3B8>"
+    start:
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Migrationslauf</#94A3B8> <#F1F5F9>{id}</#F1F5F9> <#94A3B8>gestartet. Verfolge ihn mit /economy migrate status.</#94A3B8>"
+    pause:
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Der Lauf stoppt nach dem aktuellen Block.</#94A3B8>"
+      idle: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Es läuft keine Migration.</#94A3B8>"
+    resume:
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Der Lauf geht weiter.</#94A3B8>"
+    status:
+      none: "<#94A3B8>Auf diesem Server lief noch keine Migration.</#94A3B8>"
+      line: "<#94A3B8>Lauf</#94A3B8> <#F1F5F9>{id}</#F1F5F9> <#94A3B8>| {state} | {imported} von {players} importiert, {failed} fehlgeschlagen</#94A3B8>"
+    rollback:
+      running: "<#94A3B8>Die alten Guthaben werden wiederhergestellt.</#94A3B8>"
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>{restored} Guthaben wiederhergestellt, {changed} blieben unverändert, weil sie sich nach dem Lauf geändert haben.</#94A3B8>"
+    error:
+      source-missing: "<#F87171>[X]</#F87171> <#94A3B8>Nenne eine Quelle. Siehe /economy migrate sources.</#94A3B8>"
+      source-unknown: "<#F87171>[X]</#F87171> <#94A3B8>Diese Quelle wurde nicht gefunden. Siehe /economy migrate sources.</#94A3B8>"
+      currency-unknown: "<#F87171>[X]</#F87171> <#94A3B8>Diese Währung gibt es nicht.</#94A3B8>"
+      plan-unknown: "<#F87171>[X]</#F87171> <#94A3B8>Diesen Plan gibt es nicht.</#94A3B8>"
+      plan-stale: "<#F87171>[X]</#F87171> <#94A3B8>Dieser Plan ist zu alt oder wurde schon benutzt. Erstelle einen neuen.</#94A3B8>"
+      run-unknown: "<#F87171>[X]</#F87171> <#94A3B8>Diesen Lauf gibt es nicht.</#94A3B8>"
+      not-rollbackable: "<#F87171>[X]</#F87171> <#94A3B8>Nur ein fertiger oder pausierter Lauf kann zurückgesetzt werden.</#94A3B8>"
+      nothing-paused: "<#F87171>[X]</#F87171> <#94A3B8>Kein Lauf ist pausiert.</#94A3B8>"
+      busy: "<#F87171>[X]</#F87171> <#94A3B8>Es läuft schon eine Migration.</#94A3B8>"
+      console-only: "<#F87171>[X]</#F87171> <#94A3B8>Dieser Schritt geht nur in der Konsole.</#94A3B8>"
+      id-invalid: "<#F87171>[X]</#F87171> <#94A3B8>Gib die Nummer des Plans oder Laufs an.</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#94A3B8>Der Migrationsschritt ist fehlgeschlagen:</#94A3B8> <#F1F5F9>{error}</#F1F5F9>"
+
+  currencies:
+    list:
+      header: "<gradient:#FBBF24:#F59E0B>Währungen</gradient>"
+      context: "<#94A3B8>{count} aktiv</#94A3B8>"
+      entry: "<click:run_command:'/currencies info {id}'><hover:show_text:'<#94A3B8>Klicken für das Format</#94A3B8>'><#F1F5F9>{name}</#F1F5F9> <#64748B>{id}</#64748B></hover></click>"
+      footer: "<#A78BFA>></#A78BFA> <#94A3B8>/currencies overview öffnet die Verwaltung</#94A3B8>"
+    info:
+      header: "<gradient:#FBBF24:#F59E0B>{name}</gradient>"
+      context: "<#94A3B8>Kennung</#94A3B8> <#F1F5F9>{id}</#F1F5F9>"
+    label:
+      symbol: "Symbol"
+      prefix: "Präfix"
+      suffix: "Suffix"
+      icon: "Symbolbild"
+      example: "Beispiel"
+    create:
+      usage: "<#F87171>[X]</#F87171> <#94A3B8>Nutzung:</#94A3B8> <#F1F5F9>/currencies create <id> <Symbol> [Präfix] [Suffix]</#F1F5F9>"
+      exists: "<#F87171>[X]</#F87171> <#94A3B8>Die Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>gibt es schon.</#94A3B8>"
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>angelegt.</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#94A3B8>Die Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>konnte nicht angelegt werden.</#94A3B8>"
+    edit:
+      usage: "<#F87171>[X]</#F87171> <#94A3B8>Nutzung:</#94A3B8> <#F1F5F9>/currencies edit <Währung> <identifier|symbol|prefix|suffix|icon> <Wert></#F1F5F9>"
+      done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{currency}</#F1F5F9> <dark_gray>|</dark_gray> <#94A3B8>{field}</#94A3B8> <#94A3B8>ist jetzt</#94A3B8> <#F1F5F9>{value}</#F1F5F9><#94A3B8>.</#94A3B8>"
+      saved: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>gespeichert.</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#94A3B8>Die Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>konnte nicht gespeichert werden.</#94A3B8>"
+    delete:
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>gelöscht.</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#94A3B8>Die Währung</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>konnte nicht gelöscht werden.</#94A3B8>"
+    reset:
+      done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Guthaben in</#94A3B8> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>auf null gesetzt.</#94A3B8>"
+      refused: "<#F87171>[X]</#F87171> <#F1F5F9>{currency}</#F1F5F9> <#94A3B8>kann nicht zurückgesetzt werden.</#94A3B8>"
+
+  field:
+    identifier:
+      label: "Kennung"
+      name: "<#F1F5F9>Kennung</#F1F5F9>"
+      description: "Die eindeutige id für Befehle und Configs, zum Beispiel coins."
+    symbol:
+      label: "Symbol"
+      name: "<#F1F5F9>Symbol</#F1F5F9>"
+      description: "Ein kurzes Zeichen, das neben Beträgen steht."
+    icon:
+      label: "Symbolbild"
+      name: "<#F1F5F9>Symbolbild</#F1F5F9>"
+      description: "Das Item für diese Währung als Materialname, zum Beispiel GOLD_INGOT."
+    prefix:
+      label: "Präfix"
+      name: "<#F1F5F9>Präfix</#F1F5F9>"
+      description: "Optionaler Text vor einem Betrag."
+    suffix:
+      label: "Suffix"
+      name: "<#F1F5F9>Suffix</#F1F5F9>"
+      description: "Optionaler Text nach einem Betrag."
+
+  coupon:
+    give:
+      offline: "<#F87171>[X]</#F87171> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>ist offline. Coupons gehen nur an Spieler, die online sind.</#94A3B8>"
+      done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat</#94A3B8> <#F1F5F9>{amount}x {template}</#F1F5F9> <#94A3B8>erhalten.</#94A3B8>"
+      received: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Du hast</#94A3B8> <#F1F5F9>{amount}x {template}</#F1F5F9> <#94A3B8>erhalten. Rechtsklick zum Einlösen.</#94A3B8>"
+    list:
+      empty: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Es sind keine Coupon-Vorlagen eingerichtet.</#94A3B8>"
+      header: "<gradient:#FBBF24:#F59E0B>Coupons</gradient>"
+      context: "<#94A3B8>{count} Vorlagen</#94A3B8>"
+      footer: "<#A78BFA>></#A78BFA> <#94A3B8>/coupon give <Spieler> <Vorlage> verteilt einen</#94A3B8>"
+      joiner: " <dark_gray>|</dark_gray> "
+    reload:
+      done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{count}</#F1F5F9> <#94A3B8>Coupon-Vorlagen neu geladen.</#94A3B8>"
+    history:
+      error: "<#F87171>[X]</#F87171> <#94A3B8>Die Einlösungen konnten nicht geladen werden.</#94A3B8>"
+      empty: "<#FBBF24>[!]</#FBBF24> <#F1F5F9>{player}</#F1F5F9> <#94A3B8>hat noch keinen Coupon eingelöst.</#94A3B8>"
+      header: "<gradient:#FBBF24:#F59E0B>Eingelöste Coupons</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{player}</#F1F5F9>"
+      context: "<#94A3B8>{count} insgesamt, neueste zuerst</#94A3B8>"
+    redeem:
+      done: "<#4ADE80>[OK]</#4ADE80> <#94A3B8>Coupon</#94A3B8> <#F1F5F9>{template}</#F1F5F9> <#94A3B8>eingelöst.</#94A3B8>"
+      already: "<#F87171>[X]</#F87171> <#94A3B8>Dieser Coupon wurde schon eingelöst.</#94A3B8>"
+      template-missing: "<#F87171>[X]</#F87171> <#94A3B8>Den Coupon</#94A3B8> <#F1F5F9>{template}</#F1F5F9> <#94A3B8>gibt es nicht mehr. Frag das Team.</#94A3B8>"
+      error: "<#F87171>[X]</#F87171> <#94A3B8>Der Coupon konnte nicht eingelöst werden. Das Team wurde informiert.</#94A3B8>"
+      not-owner: "<#F87171>[X]</#F87171> <#94A3B8>Du kannst nur Coupons einlösen, die an dich ausgegeben wurden.</#94A3B8>"
+      owner-only: "<#F87171>[X]</#F87171> <#94A3B8>Dieser Coupon kann nur von seinem Besitzer eingelöst werden.</#94A3B8>"
+    item:
+      contains: "<#C4B5FD>Enthält</#C4B5FD>"
+      action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Rechtsklick zum Einlösen</#F1F5F9>"
+
+  item:
+    worth: "Wert"
+    action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Rechtsklick zum Einlösen</#F1F5F9>"
+    coins:
+      name: "<gradient:#FBBF24:#F59E0B>Münzbeutel</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{amount}</#F1F5F9>"
+      description: "<#CBD5E1>Coins im Beutel, bereit zum Ausgeben.</#CBD5E1>"
+      value: "<#FBBF24>{amount} Coins</#FBBF24>"
+    crystals:
+      name: "<gradient:#2DD4BF:#A855F7>Kristallsplitter</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{amount}</#F1F5F9>"
+      description: "<#CBD5E1>Premium-Währung für Kosmetik und Komfort.</#CBD5E1>"
+      value: "<#C4B5FD>{amount} Kristalle</#C4B5FD>"
+    generic:
+      name: "<#F1F5F9>Währungsgutschein</#F1F5F9> <dark_gray>|</dark_gray> <#F1F5F9>{amount}</#F1F5F9>"
+      description: "<#CBD5E1>Schreibt seinen Wert deinem Guthaben gut.</#CBD5E1>"
+      value: "<#F1F5F9>{amount}</#F1F5F9>"
+    redeem:
+      done: "<#4ADE80>[OK]</#4ADE80> <#F1F5F9>{amount} {currency}</#F1F5F9> <#94A3B8>eingelöst.</#94A3B8>"
+      failed: "<#F87171>[X]</#F87171> <#F1F5F9>{amount} {currency}</#F1F5F9> <#94A3B8>konnten nicht eingelöst werden, dein Guthaben ist unverändert.</#94A3B8>"
+      not-owner: "<#F87171>[X]</#F87171> <#94A3B8>Du kannst nur Items einlösen, die an dich ausgegeben wurden.</#94A3B8>"
+      owner-only: "<#F87171>[X]</#F87171> <#94A3B8>Dieses Item kann nur von seinem Besitzer eingelöst werden.</#94A3B8>"
+      busy: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Dein letztes Item wird noch eingelöst. Versuch es gleich noch einmal.</#94A3B8>"
+      returned: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Ein Währungs-Item konnte nach deinem Verlassen nicht eingelöst werden. Du hast es zurück.</#94A3B8>"
+
+  view:
+    common:
+      close:
+        name: "<#F87171>Schließen</#F87171>"
+        lore: "<#A78BFA>></#A78BFA> <#94A3B8>Klicken schließt dieses Menü</#94A3B8>"
+      no-permission: "<#F87171>[X]</#F87171> <#94A3B8>Dafür fehlt dir die Berechtigung.</#94A3B8>"
+      example: "Beispiel"
+      currency-name: "<#F1F5F9>{name}</#F1F5F9> <dark_gray>|</dark_gray> <#94A3B8>{id}</#94A3B8>"
+      filter:
+        name: "<#F1F5F9>Filter</#F1F5F9>"
+        option: "<#94A3B8>○</#94A3B8> <#94A3B8>{name}</#94A3B8>"
+        option-active: "<#A78BFA>●</#A78BFA> <#F1F5F9>{name}</#F1F5F9>"
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Linksklick weiter, Rechtsklick zurück</#F1F5F9>"
+    overview:
+      title: "<gradient:#FBBF24:#F59E0B>Währungen</gradient>"
+      header:
+        name: "<gradient:#FBBF24:#F59E0B>Währungsverwaltung</gradient>"
+        description: "Alle Währungen des Servers. Klick auf eine für Format und Aktionen."
+      label:
+        count: "Währungen"
+      create:
+        name: "<#F1F5F9>Neue Währung</#F1F5F9>"
+        description: "Lege eine Währung mit eigener Kennung, eigenem Symbol und Symbolbild an."
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Anlegen</#F1F5F9>"
+      entry:
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Verwalten</#F1F5F9>"
+    detail:
+      title: "<gradient:#FBBF24:#F59E0B>{currency}</gradient>"
+      back:
+        name: "<#F1F5F9>Zurück</#F1F5F9>"
+        lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zu allen Währungen</#94A3B8>"
+      header:
+        description: "So sehen Beträge dieser Währung aus, und das kannst du mit ihr tun."
+      irreversible: "<#F87171>[!]</#F87171> <#94A3B8>Das lässt sich nicht rückgängig machen.</#94A3B8>"
+      top:
+        name: "<#F1F5F9>Reichste Besitzer</#F1F5F9>"
+        description: "Die reichsten Spieler in dieser Währung."
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Öffnen</#F1F5F9>"
+      edit:
+        name: "<#F1F5F9>Währung bearbeiten</#F1F5F9>"
+        description: "Kennung, Symbol, Symbolbild, Präfix oder Suffix ändern."
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Bearbeiten</#F1F5F9>"
+      reset:
+        name: "<#F87171>Alle Guthaben zurücksetzen</#F87171>"
+        description: "Setzt das Guthaben jedes Spielers in dieser Währung auf null."
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Prüfen</#F1F5F9>"
+      delete:
+        name: "<#F87171>Währung löschen</#F87171>"
+        description: "Entfernt diese Währung und jedes Konto, das sie hält."
+        action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Prüfen</#F1F5F9>"
+    leaderboard:
+      title: "<gradient:#FBBF24:#F59E0B>Top</gradient> <dark_gray>|</dark_gray> {currency}"
+      back:
+        name: "<#F1F5F9>Zurück</#F1F5F9>"
+        lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zur Währung</#94A3B8>"
+      header:
+        name: "<gradient:#FBBF24:#F59E0B>Reichste Besitzer</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{currency}</#F1F5F9>"
+        description: "Die reichsten Spieler dieser Währung. Mit dem Filter wechselst du die Währung."
+      label:
+        shown: "Gelistete Spieler"
+        balance: "Guthaben"
+      entry:
+        name: "<#94A3B8>#{rank}</#94A3B8> <#F1F5F9>{player}</#F1F5F9>"
+        podium-1: "<#FBBF24>#1</#FBBF24> <#F1F5F9>{player}</#F1F5F9>"
+        podium-2: "<#CBD5E1>#2</#CBD5E1> <#F1F5F9>{player}</#F1F5F9>"
+        podium-3: "<#D97706>#3</#D97706> <#F1F5F9>{player}</#F1F5F9>"
+    form:
+      label:
+        value: "Wert"
+      field-action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Ändern</#F1F5F9>"
+      save-missing: "<#F87171>[X]</#F87171> <#94A3B8>Setze zuerst Kennung und Symbol.</#94A3B8>"
+      save-missing-chat: "<#F87171>[X]</#F87171> <#94A3B8>Kennung und Symbol dürfen nicht leer sein.</#94A3B8>"
+      create:
+        title: "<gradient:#FBBF24:#F59E0B>Neue Währung</gradient>"
+        back:
+          name: "<#F1F5F9>Zurück</#F1F5F9>"
+          lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zu allen Währungen</#94A3B8>"
+        header:
+          name: "<gradient:#FBBF24:#F59E0B>Neue Währung</gradient>"
+          description: "Klick auf ein Feld, um es zu setzen. Kennung und Symbol sind Pflicht."
+        save:
+          name: "<#4ADE80>Währung anlegen</#4ADE80>"
+          description: "Speichert die Währung mit den Feldern oben."
+          action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Anlegen</#F1F5F9>"
+      edit:
+        title: "<gradient:#FBBF24:#F59E0B>Bearbeiten</gradient> <dark_gray>|</dark_gray> {currency}"
+        back:
+          name: "<#F1F5F9>Zurück</#F1F5F9>"
+          lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zur Währung, ohne zu speichern</#94A3B8>"
+        header:
+          name: "<gradient:#FBBF24:#F59E0B>Bearbeiten</gradient> <dark_gray>|</dark_gray> <#F1F5F9>{currency}</#F1F5F9>"
+          description: "Klick auf ein Feld, um es zu ändern, und speichere danach."
+        save:
+          name: "<#4ADE80>Änderungen speichern</#4ADE80>"
+          description: "Übernimmt die Felder oben für diese Währung."
+          action: "<#A78BFA>▸</#A78BFA> <#F1F5F9>Klicken zum Speichern</#F1F5F9>"
+    danger:
+      title: "<#F87171>Bestätigen</#F87171> <dark_gray>|</dark_gray> {currency}"
+      back:
+        name: "<#F1F5F9>Zurück</#F1F5F9>"
+        lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zur Währung</#94A3B8>"
+      confirm-action: "<#F87171>▸</#F87171> <#F1F5F9>Klicken zum Bestätigen</#F1F5F9>"
+      keep:
+        name: "<#4ADE80>Behalten</#4ADE80>"
+        lore: "<#A78BFA>></#A78BFA> <#94A3B8>Zurück ohne Änderung</#94A3B8>"
+      delete:
+        header:
+          name: "<#F87171>Löschen</#F87171> <dark_gray>|</dark_gray> <#F1F5F9>{currency}</#F1F5F9>"
+          description: "Löscht {currency} und jedes Konto, das sie hält."
+        confirm:
+          name: "<#F87171>Jetzt löschen</#F87171>"
+          description: "Die Währung und alle ihre Guthaben werden entfernt."
+      reset:
+        header:
+          name: "<#F87171>Zurücksetzen</#F87171> <dark_gray>|</dark_gray> <#F1F5F9>{currency}</#F1F5F9>"
+          description: "Setzt jedes Guthaben in {currency} auf dem Server auf null."
+        confirm:
+          name: "<#F87171>Jetzt zurücksetzen</#F87171>"
+          description: "Jeder Spieler verliert sein Guthaben in dieser Währung."
+    input:
+      title: "<gradient:#FBBF24:#F59E0B>Setzen</gradient> <dark_gray>|</dark_gray> {field}"
+      prompt: "<#FBBF24>[!]</#FBBF24> <#94A3B8>Schreib den neuen Wert für</#94A3B8> <#F1F5F9>{field}</#F1F5F9> <#94A3B8>in den Chat, oder</#94A3B8> <#F1F5F9>cancel</#F1F5F9><#94A3B8>, um ihn zu behalten.</#94A3B8>"
+      cancelled: "<#94A3B8>Nichts geändert.</#94A3B8>"
+      empty: "<#F87171>[X]</#F87171> <#94A3B8>Der Wert darf nicht leer sein.</#94A3B8>"
+      invalid-material: "<#F87171>[X]</#F87171> <#F1F5F9>{value}</#F1F5F9> <#94A3B8>ist kein Item-Material.</#94A3B8>"
+
+  bedrock:
+    back: "Zurück"
+    overview:
+      title: "Währungen"
+      content: "{count} Währungen. Wähle eine für Format und Aktionen."
+      entry: "{name} | {id}"
+      create: "Neue Währung"
+    detail:
+      top: "Reichste Besitzer"
+      edit: "Währung bearbeiten"
+      reset: "Alle Guthaben zurücksetzen"
+      delete: "Währung löschen"
+    leaderboard:
+      title: "Top | {currency}"
+      empty: "Noch niemand besitzt diese Währung."
+      next: "Wechseln zu {currency}"
+    form:
+      create-title: "Neue Währung"
+      edit-title: "Währung bearbeiten"
+    danger:
+      confirm: "Bestätigen"
+      keep: "Behalten"
+    pay:
+      title: "Zahlung bestätigen"
+      content: "Du zahlst {value} an {target}."
+      confirm: "Bestätigen"
+      cancel: "Abbrechen"
+
+_defaults:
+  title: "<gradient:#FBBF24:#F59E0B>Schatzkammer</gradient>"
+  back: "<#F1F5F9>Zurück</#F1F5F9>"
+  previous: "<#F1F5F9>← Vorherige Seite</#F1F5F9>"
+  next: "<#F1F5F9>Nächste Seite »</#F1F5F9>"
+  loading: "<#94A3B8>Lädt...</#94A3B8>"
+  page:
+    name: "<#F1F5F9>Seite {page}/{total_pages}</#F1F5F9>"
+    lore: "<#94A3B8>Die Pfeile links und rechts blättern</#94A3B8>"

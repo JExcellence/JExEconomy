@@ -1,0 +1,15 @@
+JExEconomy
+Copyright 2026 JExcellence
+
+Licensed under the Apache License 2.0 with the Commons Clause License Condition v1.0, see LICENSE.
+This software is not open source. The Commons Clause forbids selling it or a product or service whose
+value derives, entirely or substantially, from its functionality.
+
+The Licensor reads this as follows: running a game server that uses JExEconomy and earns money, for
+example from ranks or donations, is not selling JExEconomy.
+
+The plugin jar bundles the unmodified Vault API (https://github.com/MilkBowl/VaultAPI), licensed under
+the GNU LGPL 3.0. See licenses/LGPL-3.0.txt and licenses/GPL-3.0.txt.
+
+Other third-party components are listed in THIRD_PARTY_NOTICES.md, including the MIT-licensed projects in
+licenses/MIT-BlvckBytes.txt.

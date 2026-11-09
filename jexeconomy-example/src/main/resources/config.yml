@@ -1,0 +1,10 @@
+# Players who cannot send or receive /pay payments, by UUID.
+trade-banned:
+  - "00000000-0000-0000-0000-000000000000"
+
+# The block this example adds to each leaderboard card.
+card:
+  title: "Trading"
+  label: "Status"
+  allowed: "Allowed"
+  denied: "Banned"

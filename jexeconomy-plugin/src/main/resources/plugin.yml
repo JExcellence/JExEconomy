@@ -1,0 +1,294 @@
+name: JExEconomy
+version: '3.2.0'
+main: de.jexcellence.economy.JExEconomyPlugin
+description: Multi-currency economy system
+api-version: '1.21'
+author: JExcellence
+website: https://jexcellence.de
+prefix: JExcellence
+folia-supported: true
+
+# Bundles the Vault API, so a separate Vault jar is optional.
+provides:
+  - Vault
+
+softdepend:
+  - PlaceholderAPI
+  - floodgate
+
+# Permission nodes live under jexeconomy.*; the old nodes stay as aliases for now.
+# Each old node grants its new node as a child, see docs/PERMISSIONS.md.
+permissions:
+  jexeconomy.*:
+    description: Every JExEconomy permission
+    default: op
+    children:
+      jexeconomy.balance: true
+      jexeconomy.balance.other: true
+      jexeconomy.balance.top: true
+      jexeconomy.pay: true
+      jexeconomy.currencylog: true
+      jexeconomy.currencylog.player: true
+      jexeconomy.currencylog.clear: true
+      jexeconomy.currencies: true
+      jexeconomy.currencies.overview: true
+      jexeconomy.currencies.create: true
+      jexeconomy.currencies.edit: true
+      jexeconomy.currencies.delete: true
+      jexeconomy.currencies.reset: true
+      jexeconomy.admin: true
+      jexeconomy.admin.give: true
+      jexeconomy.admin.take: true
+      jexeconomy.admin.set: true
+      jexeconomy.admin.reset-player: true
+      jexeconomy.admin.giveall: true
+      jexeconomy.admin.migrate: true
+      jexeconomy.admin.reload: true
+      jexeconomy.coupon: true
+      jexeconomy.coupon.give: true
+      jexeconomy.coupon.list: true
+      jexeconomy.coupon.reload: true
+      jexeconomy.coupon.history: true
+  jexeconomy.admin.*:
+    description: Every administrative JExEconomy permission, including the currency manager
+    default: op
+    children:
+      jexeconomy.balance.other: true
+      jexeconomy.currencylog.player: true
+      jexeconomy.currencylog.clear: true
+      jexeconomy.currencies: true
+      jexeconomy.currencies.overview: true
+      jexeconomy.currencies.create: true
+      jexeconomy.currencies.edit: true
+      jexeconomy.currencies.delete: true
+      jexeconomy.currencies.reset: true
+      jexeconomy.admin: true
+      jexeconomy.admin.give: true
+      jexeconomy.admin.take: true
+      jexeconomy.admin.set: true
+      jexeconomy.admin.reset-player: true
+      jexeconomy.admin.giveall: true
+      jexeconomy.admin.migrate: true
+      jexeconomy.admin.reload: true
+  jexeconomy.coupon.*:
+    description: Every coupon permission
+    default: op
+    children:
+      jexeconomy.coupon: true
+      jexeconomy.coupon.give: true
+      jexeconomy.coupon.list: true
+      jexeconomy.coupon.reload: true
+      jexeconomy.coupon.history: true
+  jexeconomy.balance:
+    description: Use /balance
+    default: true
+  jexeconomy.balance.other:
+    description: Show the balance of another player
+    default: op
+  jexeconomy.balance.top:
+    description: Use /balance top
+    default: true
+  jexeconomy.pay:
+    description: Use /pay
+    default: true
+  jexeconomy.currencylog:
+    description: Use /currencylog for the own log
+    default: true
+  jexeconomy.currencylog.player:
+    description: Read the transaction log of another player
+    default: op
+  jexeconomy.currencylog.clear:
+    description: Delete old transaction log entries
+    default: op
+  jexeconomy.currencies:
+    description: Use /currencies
+    default: op
+  jexeconomy.currencies.overview:
+    description: Open the currency manager
+    default: op
+  jexeconomy.currencies.create:
+    description: Create a currency
+    default: op
+  jexeconomy.currencies.edit:
+    description: Edit a currency
+    default: op
+  jexeconomy.currencies.delete:
+    description: Delete a currency with all its balances
+    default: op
+  jexeconomy.currencies.reset:
+    description: Reset every balance of a currency
+    default: op
+  jexeconomy.admin:
+    description: Use /economy
+    default: op
+  jexeconomy.admin.give:
+    description: Give currency to a player
+    default: op
+  jexeconomy.admin.take:
+    description: Take currency from a player
+    default: op
+  jexeconomy.admin.set:
+    description: Set the balance of a player
+    default: op
+  jexeconomy.admin.reset-player:
+    description: Reset the balance of a player
+    default: op
+  jexeconomy.admin.giveall:
+    description: Give currency to every online player
+    default: op
+  jexeconomy.admin.migrate:
+    description: Show the migration screens
+    default: op
+  jexeconomy.admin.reload:
+    description: Reload currencies and texts
+    default: op
+  jexeconomy.coupon:
+    description: Use /coupon
+    default: op
+  jexeconomy.coupon.give:
+    description: Mint and give a coupon to a player
+    default: op
+  jexeconomy.coupon.list:
+    description: List coupon templates
+    default: op
+  jexeconomy.coupon.reload:
+    description: Reload coupons.yml
+    default: op
+  jexeconomy.coupon.history:
+    description: Show the coupon redemptions of a player
+    default: op
+  currency.command:
+    description: Old name of jexeconomy.balance, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.balance: true
+  currency.command.other:
+    description: Old name of jexeconomy.balance.other, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.balance.other: true
+  currency.command.top:
+    description: Old name of jexeconomy.balance.top, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.balance.top: true
+  pay.command:
+    description: Old name of jexeconomy.pay, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.pay: true
+  currencylog.command:
+    description: Old name of jexeconomy.currencylog, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencylog: true
+  currencylog.command.player:
+    description: Old name of jexeconomy.currencylog.player, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencylog.player: true
+  currencylog.command.clear:
+    description: Old name of jexeconomy.currencylog.clear, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencylog.clear: true
+  currencies.command:
+    description: Old name of jexeconomy.currencies, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies: true
+  currencies.command.overview:
+    description: Old name of jexeconomy.currencies.overview, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.overview: true
+  currencies.command.create:
+    description: Old name of jexeconomy.currencies.create, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.create: true
+  currencies.command.update:
+    description: Old name of jexeconomy.currencies.edit, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.edit: true
+  jexeconomy.admin.edit:
+    description: Old name of jexeconomy.currencies.edit, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.edit: true
+  currencies.command.delete:
+    description: Old name of jexeconomy.currencies.delete, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.delete: true
+  jexeconomy.admin.reset:
+    description: Old name of jexeconomy.currencies.reset, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.currencies.reset: true
+  economy.command:
+    description: Old name of jexeconomy.admin, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin: true
+  economy.command.give:
+    description: Old name of jexeconomy.admin.give, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.give: true
+  economy.command.take:
+    description: Old name of jexeconomy.admin.take, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.take: true
+  economy.command.set:
+    description: Old name of jexeconomy.admin.set, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.set: true
+  economy.command.reset:
+    description: Old name of jexeconomy.admin.reset-player, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.reset-player: true
+  economy.command.giveall:
+    description: Old name of jexeconomy.admin.giveall, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.giveall: true
+  economy.command.migrate:
+    description: Old name of jexeconomy.admin.migrate, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.migrate: true
+  economy.command.reload:
+    description: Old name of jexeconomy.admin.reload, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.admin.reload: true
+  economy.coupon:
+    description: Old name of jexeconomy.coupon, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.coupon: true
+  economy.coupon.give:
+    description: Old name of jexeconomy.coupon.give, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.coupon.give: true
+  economy.coupon.list:
+    description: Old name of jexeconomy.coupon.list, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.coupon.list: true
+  economy.coupon.reload:
+    description: Old name of jexeconomy.coupon.reload, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.coupon.reload: true
+  economy.coupon.history:
+    description: Old name of jexeconomy.coupon.history, accepted until the end of the season
+    default: false
+    children:
+      jexeconomy.coupon.history: true
