@@ -204,7 +204,7 @@ public final class EconomyPanel {
         if (sender instanceof Player player) {
             chatPanel().send(EconomyText.audience(player));
         } else {
-            plainLines().forEach(sender::sendMessage);
+            plainLines().forEach(line -> EconomyText.deliver(sender, line));
         }
     }
 

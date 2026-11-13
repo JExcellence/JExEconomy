@@ -5,6 +5,7 @@ import de.jexcellence.economy.database.entity.TransactionLog;
 import de.jexcellence.economy.format.CurrencyFormat;
 import de.jexcellence.economy.text.EconomyPanel;
 import de.jexcellence.economy.text.EconomyText;
+import de.jexcellence.economy.text.PlayerLocale;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -143,7 +144,7 @@ final class LogPanels {
     }
 
     private static @NotNull DateTimeFormatter dateFormat(@NotNull Player viewer) {
-        return DateTimeFormatter.ofPattern(EconomyText.msg(KEY + "date-pattern").plain(viewer), viewer.locale());
+        return DateTimeFormatter.ofPattern(EconomyText.msg(KEY + "date-pattern").plain(viewer), PlayerLocale.of(viewer));
     }
 
     private static @NotNull String playerName(@NotNull UUID uuid) {

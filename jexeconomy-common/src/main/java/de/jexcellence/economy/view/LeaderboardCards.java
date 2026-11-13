@@ -11,6 +11,7 @@ import de.jexcellence.jexplatform.utility.item.HeadBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -59,9 +60,17 @@ final class LeaderboardCards {
                         .with("player", owner.getPlayerName()), player),
                 lore.build());
         if (rank <= PODIUM) {
-            card.editMeta(meta -> meta.setEnchantmentGlintOverride(true));
+            addGlint(card);
         }
         return card;
+    }
+
+    private static void addGlint(@NotNull ItemStack card) {
+        ItemMeta meta = card.getItemMeta();
+        if (meta != null) {
+            meta.setEnchantmentGlintOverride(true);
+            card.setItemMeta(meta);
+        }
     }
 
     static @NotNull List<Currency> sorted(@NotNull Collection<Currency> currencies) {

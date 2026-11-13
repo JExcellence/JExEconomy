@@ -12,6 +12,7 @@ import de.jexcellence.economy.format.CurrencyFormat;
 import de.jexcellence.economy.service.EconomyService;
 import de.jexcellence.economy.text.EconomyPanel;
 import de.jexcellence.economy.text.EconomyText;
+import de.jexcellence.economy.text.PlayerLocale;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -150,7 +151,7 @@ public final class CouponHandler {
         }
         var dates = DateTimeFormatter.ofPattern(
                 EconomyText.msg(EconomyText.ROOT + "log.date-pattern").plain(viewer),
-                viewer != null ? viewer.locale() : Locale.ROOT);
+                viewer != null ? PlayerLocale.of(viewer) : Locale.ROOT);
         var panel = EconomyPanel.of(sender)
                 .header(EconomyText.msg(KEY + "history.header").with(PARAM_PLAYER, targetName).component(viewer))
                 .context(EconomyText.msg(KEY + "history.context").with(PARAM_COUNT, rows.size()).component(viewer))
